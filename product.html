@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Товар — Мебельный Мастер</title>
+<meta name="description" content="Карточка товара «Мебельный Мастер»: цвета, размеры, цена и прямые ссылки на Ozon, Wildberries, Яндекс.Маркет.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:+79931413010">+7 993 141‑30‑10</a>
+      <a href="https://max.ru/id274985568_biz" target="_blank" rel="noopener">MAX</a>
+      <a href="mailto:mmasterufa@gmail.com">mmasterufa@gmail.com</a>
+    </div>
+    <nav class="topbar-nav">
+      <a href="index.html#catalog">Каталог</a>
+      <a href="about.html">О нас</a>
+      <a href="certificates.html">Сертификация</a>
+      <a href="index.html#trust">Доставка</a>
+      <a href="index.html#lead">Контакты</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="images/logo.png" alt="Мебельный мастер" class="logo-img"></a>
+
+    <form class="search-form" role="search" onsubmit="return false;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="search" placeholder="Найти товар в каталоге…" aria-label="Поиск по каталогу">
+    </form>
+
+    <div class="header-actions">
+      <a href="index.html#lead" class="btn btn-primary btn-sm">Оставить заявку</a>
+    </div>
+
+    <button class="hamburger" data-hamburger aria-label="Меню">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <nav data-mobile-nav style="display:none;flex-direction:column;padding:0 24px 18px;gap:12px;font-size:.92rem;">
+    <a href="index.html#catalog">Каталог</a>
+    <a href="about.html">О нас</a>
+    <a href="certificates.html">Сертификация</a>
+    <a href="index.html#trust">Доставка</a>
+    <a href="index.html#lead">Контакты</a>
+  </nav>
+</header>
+
+<div class="container">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="index.html">Главная</a><span class="sep">/</span>
+    <a href="index.html#catalog">Каталог</a><span class="sep">/</span>
+    <span class="current">Товар</span>
+  </nav>
+</div>
+
+<main class="product-main">
+  <div class="container" data-product-root>
+    <!-- контент собирается catalog.js из data/products.js по параметру ?id= -->
+  </div>
+</main>
+
+<!-- ============ QUESTION FORM ============ -->
+<div class="container">
+  <div class="qa-block">
+    <h3>Остались вопросы о товаре?</h3>
+    <p>Напишите — ответим в течение рабочего дня и поможем с выбором цвета или размера.</p>
+    <form data-lead-form action="https://formsubmit.co/ajax/mmasterufa@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="Вопрос о товаре с сайта Мебельный Мастер">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="form-row">
+        <label for="qa-name">Имя</label>
+        <input id="qa-name" name="Имя" type="text" placeholder="Как к вам обращаться" required>
+      </div>
+      <div class="form-row">
+        <label for="qa-contact">Телефон или email</label>
+        <input id="qa-contact" name="Контакт" type="text" placeholder="Куда ответить" required>
+      </div>
+      <div class="form-row">
+        <label for="qa-question">Вопрос</label>
+        <textarea id="qa-question" name="Вопрос" rows="3" placeholder="Например: сколько ждать доставку" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Отправить вопрос</button>
+      <div class="form-msg" data-form-msg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        Спасибо, ответим в течение рабочего дня
+      </div>
+      <div class="form-msg form-msg-error" data-form-error>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        Не отправилось — напишите нам на mmasterufa@gmail.com или позвоните по +7 993 141‑30‑10
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" style="margin-top:64px;">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="images/logo.png" alt="Мебельный мастер" class="logo-img"></a>
+        <p style="margin-top:14px;">Корпусная мебель из ЛДСП для дома. Собственное производство в России.</p>
+        <div class="footer-social">
+          <a href="https://vk.com/mm_mebelny_master" target="_blank" rel="noopener" class="social-badge" aria-label="ВКонтакте">VK</a>
+          <a href="https://t.me/mm_mebelny_master" target="_blank" rel="noopener" class="social-badge" aria-label="Telegram">TG</a>
+          <a href="https://instagram.com/mm_mebelny_master" target="_blank" rel="noopener" class="social-badge" aria-label="Instagram">IG</a>
+          <a href="https://max.ru/id274985568_biz" target="_blank" rel="noopener" class="social-badge" aria-label="MAX">MAX</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Каталог</h4>
+        <ul id="footer-categories"></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Свяжитесь с нами</h4>
+        <ul>
+          <li><a href="tel:+79931413010">+7 993 141‑30‑10</a></li>
+          <li><a href="https://max.ru/id274985568_biz" target="_blank" rel="noopener">Написать в MAX</a></li>
+          <li class="footer-note">Колл-центр: 9:00–19:00 МСК ежедневно</li>
+          <li><a href="mailto:mmasterufa@gmail.com">mmasterufa@gmail.com</a></li>
+          <li><a href="index.html#lead">Оставить заявку</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Покупателям</h4>
+        <ul>
+          <li><a href="about.html">О компании</a></li>
+          <li><a href="certificates.html">Сертификация</a></li>
+          <li><a href="index.html#trust">Доставка и оплата</a></li>
+          <li><a href="index.html#trust">Гарантия, обмен и возврат</a></li>
+          <li><a href="index.html#trust">Рассрочка</a></li>
+          <li><a href="admin.html">Управление каталогом</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Правовая информация</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Политика конфиденциальности</a></li>
+          <li><a href="public-offer.html">Публичная оферта</a></li>
+          <li><a href="promo-terms.html">Условия акций</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ООО «Мебельный Мастер». Все права защищены.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/products.js"></script>
+<script src="catalog.js"></script>
+<script src="script.js"></script>
+<script>
+  document.getElementById('footer-categories').innerHTML =
+    CATEGORIES.map(c => `<li><a href="index.html#catalog">${c.name}</a></li>`).join('');
+</script>
+</body>
+</html>

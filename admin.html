@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Управление каталогом — Мебельный Мастер</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="images/logo.png" alt="Мебельный мастер" class="logo-img"></a>
+    <div class="header-actions" style="margin-left:auto;">
+      <a href="index.html" class="btn btn-secondary btn-sm">← На сайт</a>
+    </div>
+  </div>
+</header>
+
+<div class="admin-wrap">
+  <h1 style="font-size:1.6rem;margin-bottom:6px;">Управление каталогом</h1>
+  <p style="color:var(--ink-soft);margin-bottom:28px;">
+    Добавляйте новые товары здесь, затем скачайте обновлённый файл каталога и замените им
+    <code>data/products.js</code> в папке сайта. Ничего никуда не отправляется автоматически —
+    это просто конструктор файла.
+  </p>
+
+  <div class="admin-section">
+    <h2>Текущий каталог</h2>
+    <p class="hint">Товары, которые уже есть на сайте (из data/products.js).</p>
+    <div class="admin-product-list" id="existing-list"></div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Добавить новый товар</h2>
+    <p class="hint">Заполните карточку товара. Можно добавить несколько цветов/вариантов — они появятся как переключатель на странице товара.</p>
+
+    <div class="admin-grid">
+      <div class="admin-field">
+        <label for="f-category">Категория</label>
+        <select id="f-category"></select>
+      </div>
+      <div class="admin-field">
+        <label for="f-newcategory">Или новая категория (необязательно)</label>
+        <input id="f-newcategory" type="text" placeholder="Например: Кухни">
+      </div>
+      <div class="admin-field full">
+        <label for="f-name">Название товара</label>
+        <input id="f-name" type="text" placeholder="Например: Стол письменный Norway" required>
+      </div>
+      <div class="admin-field">
+        <label for="f-icon">Иконка-заглушка (пока нет фото)</label>
+        <select id="f-icon">
+          <option value="desk-shelf">Стол со стеллажом</option>
+          <option value="desk">Стол</option>
+          <option value="dining">Обеденный стол</option>
+          <option value="divider">Стеллаж / перегородка</option>
+          <option value="cabinet">Шкаф / ниша</option>
+          <option value="dresser">Комод</option>
+          <option value="tvunit">ТВ-тумба</option>
+        </select>
+      </div>
+    </div>
+
+    <h3 style="font-size:.95rem;margin:22px 0 12px;">Варианты (цвет / размер / цена / ссылки)</h3>
+    <div id="variant-list"></div>
+    <button type="button" class="btn btn-secondary btn-sm" id="add-variant">+ Добавить вариант</button>
+
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+      <button type="button" class="btn btn-primary" id="add-product">Добавить товар в каталог</button>
+      <button type="button" class="btn btn-secondary" id="export-json">Скачать обновлённый products.js</button>
+    </div>
+    <div class="admin-log" id="log"></div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Товары, добавленные в этой сессии</h2>
+    <p class="hint">Пока вы не скачаете файл — они существуют только в этой вкладке браузера.</p>
+    <div class="admin-product-list" id="new-list"><p style="color:var(--ink-soft);font-size:.85rem;">Пока пусто.</p></div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Сертификация — текущие документы</h2>
+    <p class="hint">Декларации и сертификаты, уже опубликованные на странице «Сертификация».</p>
+    <div class="admin-product-list" id="cert-existing-list"></div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Добавить новый сертификат / декларацию</h2>
+    <p class="hint">Заполните карточку документа — как только оформите новую декларацию или сертификат.</p>
+    <div class="admin-grid">
+      <div class="admin-field full"><label>Название документа</label><input id="c-title" placeholder="Например: Декларация о соответствии ТР ТС 025/2012"></div>
+      <div class="admin-field"><label>Номер</label><input id="c-number" placeholder="ЕАЭС N RU Д-...."></div>
+      <div class="admin-field"><label>Дата регистрации</label><input id="c-regdate" placeholder="24.06.2026"></div>
+      <div class="admin-field"><label>Действует до</label><input id="c-validuntil" placeholder="14.06.2031"></div>
+      <div class="admin-field"><label>Стандарт / регламент</label><input id="c-standard" placeholder="ТР ТС 025/2012"></div>
+      <div class="admin-field"><label>Заявитель</label><input id="c-applicant" placeholder="ООО «Мебельный мастер»"></div>
+      <div class="admin-field full"><label>Изготовитель / адрес производства</label><input id="c-manufacturer" placeholder="ООО «Мебельный мастер», г. Уфа, ул. ..."></div>
+      <div class="admin-field"><label>Испытательная лаборатория</label><input id="c-testlab" placeholder="Наименование и аттестат"></div>
+      <div class="admin-field"><label>Протокол испытаний</label><input id="c-protocol" placeholder="№ ... от ..."></div>
+      <div class="admin-field"><label>Коды ТН ВЭД ЕАЭС</label><input id="c-tnved" placeholder="9403609009; ..."></div>
+      <div class="admin-field"><label>Ссылка на скан документа (необязательно)</label><input id="c-fileurl" placeholder="https://..."></div>
+      <div class="admin-field full"><label>Продукция, на которую распространяется</label><textarea id="c-products" rows="2" placeholder="Столы, столешницы и т.д."></textarea></div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+      <button type="button" class="btn btn-primary" id="add-cert">Добавить документ</button>
+      <button type="button" class="btn btn-secondary" id="export-certs">Скачать обновлённый certificates.js</button>
+    </div>
+    <div class="admin-log" id="cert-log"></div>
+  </div>
+</div>
+
+<script src="data/products.js"></script>
+<script src="data/certificates.js"></script>
+<script>
+const certState = {
+  certificates: JSON.parse(JSON.stringify(CERTIFICATES))
+};
+
+function renderCertExisting(){
+  const el = document.getElementById('cert-existing-list');
+  if(!certState.certificates.length){
+    el.innerHTML = '<p style="color:var(--ink-soft);font-size:.85rem;">Пока пусто.</p>';
+    return;
+  }
+  el.innerHTML = certState.certificates.map(c =>
+    `<div class="admin-product-item"><span>${c.title}</span><span class="meta">до ${c.validUntil || '—'}</span></div>`
+  ).join('');
+}
+
+document.getElementById('add-cert').addEventListener('click', () => {
+  const title = document.getElementById('c-title').value.trim();
+  const log = document.getElementById('cert-log');
+  if(!title){ log.style.color = '#A3402A'; log.textContent = 'Укажите название документа.'; return; }
+  const cert = {
+    id: 'cert-' + Math.random().toString(36).slice(2, 8),
+    title,
+    number: document.getElementById('c-number').value.trim(),
+    registrationDate: document.getElementById('c-regdate').value.trim(),
+    validUntil: document.getElementById('c-validuntil').value.trim(),
+    standard: document.getElementById('c-standard').value.trim(),
+    applicant: document.getElementById('c-applicant').value.trim(),
+    manufacturer: document.getElementById('c-manufacturer').value.trim(),
+    testLab: document.getElementById('c-testlab').value.trim(),
+    protocol: document.getElementById('c-protocol').value.trim(),
+    tnved: document.getElementById('c-tnved').value.trim(),
+    products: document.getElementById('c-products').value.trim(),
+    fileUrl: document.getElementById('c-fileurl').value.trim() || null
+  };
+  certState.certificates.push(cert);
+  renderCertExisting();
+  ['c-title','c-number','c-regdate','c-validuntil','c-standard','c-applicant','c-manufacturer','c-testlab','c-protocol','c-tnved','c-fileurl','c-products'].forEach(id => document.getElementById(id).value = '');
+  log.style.color = 'var(--success)';
+  log.textContent = `Добавлено: «${cert.title}». Не забудьте скачать обновлённый файл.`;
+});
+
+document.getElementById('export-certs').addEventListener('click', () => {
+  const content = `// Реестр сертификатов и деклараций «Мебельный Мастер»\n// Обновлено через admin.html — ${new Date().toLocaleDateString('ru-RU')}\n\nconst CERTIFICATES = ` + JSON.stringify(certState.certificates, null, 2) + ';\n';
+  const blob = new Blob([content], { type: 'text/javascript' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'certificates.js';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  const log = document.getElementById('cert-log');
+  log.style.color = 'var(--success)';
+  log.textContent = 'Файл certificates.js скачан — замените им файл в папке data/.';
+});
+
+renderCertExisting();
+</script>
+<script>
+
+const state = {
+  categories: JSON.parse(JSON.stringify(CATEGORIES)),
+  products: JSON.parse(JSON.stringify(PRODUCTS)),
+  added: []
+};
+
+function fmtPrice(n){ return Number(n).toLocaleString('ru-RU') + ' ₽'; }
+
+function renderExisting(){
+  const el = document.getElementById('existing-list');
+  el.innerHTML = state.products.map(p => {
+    const cat = state.categories.find(c => c.id === p.category);
+    return `<div class="admin-product-item"><span>${p.name}</span><span class="meta">${cat ? cat.name : p.category} · ${p.variants.length} вар.</span></div>`;
+  }).join('');
+}
+
+function renderCategorySelect(){
+  const sel = document.getElementById('f-category');
+  sel.innerHTML = state.categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+}
+
+function variantRowHtml(i){
+  return `
+    <div class="variant-row" data-variant-row="${i}">
+      <button type="button" class="remove-variant" data-remove="${i}">Убрать</button>
+      <div class="admin-grid">
+        <div class="admin-field"><label>Цвет / отделка</label><input data-f="color" placeholder="Например: белый / дуб сонома"></div>
+        <div class="admin-field"><label>Габариты, см</label><input data-f="dims" placeholder="Например: 120×60"></div>
+        <div class="admin-field"><label>Цена, ₽</label><input data-f="price" type="number" placeholder="12990"></div>
+        <div class="admin-field"><label>Старая цена, ₽ (необязательно)</label><input data-f="oldPrice" type="number" placeholder="16990"></div>
+        <div class="admin-field"><label>Артикул Ozon</label><input data-f="artikulOzon" placeholder="2098826444"></div>
+        <div class="admin-field"><label>Артикул WB</label><input data-f="artikulWB" placeholder="762201339"></div>
+        <div class="admin-field full"><label>Ссылка на карточку Яндекс.Маркета (полная)</label><input data-f="ymUrl" placeholder="https://market.yandex.ru/card/.../5223385874"></div>
+      </div>
+    </div>`;
+}
+
+let variantCount = 0;
+function addVariantRow(){
+  const list = document.getElementById('variant-list');
+  const div = document.createElement('div');
+  div.innerHTML = variantRowHtml(variantCount);
+  list.appendChild(div.firstElementChild);
+  variantCount++;
+}
+
+document.getElementById('add-variant').addEventListener('click', addVariantRow);
+document.getElementById('variant-list').addEventListener('click', e => {
+  const btn = e.target.closest('[data-remove]');
+  if(!btn) return;
+  btn.closest('.variant-row').remove();
+});
+
+function slugify(str){
+  return 'p-' + str.toLowerCase()
+    .replace(/[^a-zа-я0-9]+/gi, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40) + '-' + Math.random().toString(36).slice(2,6);
+}
+
+document.getElementById('add-product').addEventListener('click', () => {
+  const name = document.getElementById('f-name').value.trim();
+  const newCatName = document.getElementById('f-newcategory').value.trim();
+  const icon = document.getElementById('f-icon').value;
+  const log = document.getElementById('log');
+
+  if(!name){ log.textContent = 'Укажите название товара.'; log.style.color = '#A3402A'; return; }
+
+  let categoryId = document.getElementById('f-category').value;
+  if(newCatName){
+    categoryId = 'cat-' + newCatName.toLowerCase().replace(/[^a-zа-я0-9]+/gi,'-').replace(/^-+|-+$/g,'');
+    if(!state.categories.find(c => c.id === categoryId)){
+      state.categories.push({ id: categoryId, name: newCatName });
+      renderCategorySelect();
+    }
+  }
+
+  const rows = document.querySelectorAll('[data-variant-row]');
+  if(!rows.length){ log.textContent = 'Добавьте хотя бы один вариант.'; log.style.color = '#A3402A'; return; }
+
+  const variants = [];
+  for(const row of rows){
+    const get = f => row.querySelector(`[data-f="${f}"]`).value.trim();
+    const color = get('color') || 'основной';
+    const price = Number(get('price')) || 0;
+    const oldPrice = get('oldPrice') ? Number(get('oldPrice')) : null;
+    variants.push({
+      color,
+      dims: get('dims') || '—',
+      artikulOzon: get('artikulOzon') || null,
+      artikulWB: get('artikulWB') || null,
+      ymUrl: get('ymUrl') || null,
+      price, oldPrice
+    });
+  }
+
+  const product = { id: slugify(name), category: categoryId, name, icon, variants };
+  state.products.push(product);
+  state.added.push(product);
+
+  renderExisting();
+  renderAdded();
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-newcategory').value = '';
+  document.getElementById('variant-list').innerHTML = '';
+  variantCount = 0;
+  addVariantRow();
+
+  log.style.color = 'var(--success)';
+  log.textContent = `Добавлено: «${product.name}» (${variants.length} вариант(ов)). Не забудьте скачать обновлённый файл.`;
+});
+
+function renderAdded(){
+  const el = document.getElementById('new-list');
+  if(!state.added.length){ el.innerHTML = '<p style="color:var(--ink-soft);font-size:.85rem;">Пока пусто.</p>'; return; }
+  el.innerHTML = state.added.map(p => `<div class="admin-product-item"><span>${p.name}</span><span class="meta">${p.variants.length} вар.</span></div>`).join('');
+}
+
+document.getElementById('export-json').addEventListener('click', () => {
+  const header = `// Каталог «Мебельный Мастер» — обновлено через admin.html\n// Дата экспорта: ${new Date().toLocaleDateString('ru-RU')}\n\n`;
+  const content = header +
+    'const CATEGORIES = ' + JSON.stringify(state.categories, null, 2) + ';\n\n' +
+    'const PRODUCTS = ' + JSON.stringify(state.products, null, 2) + ';\n';
+  const blob = new Blob([content], { type: 'text/javascript' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'products.js';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  const log = document.getElementById('log');
+  log.style.color = 'var(--success)';
+  log.textContent = 'Файл products.js скачан — замените им файл в папке data/ и загрузите сайт заново.';
+});
+
+renderCategorySelect();
+renderExisting();
+addVariantRow();
+</script>
+</body>
+</html>

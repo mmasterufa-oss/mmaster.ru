@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сертификация — Мебельный Мастер</title>
+<meta name="description" content="Декларации соответствия и сертификаты качества продукции «Мебельный мастер».">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="images/logo.png" alt="Мебельный мастер" class="logo-img"></a>
+    <div class="header-actions" style="margin-left:auto;">
+      <a href="index.html" class="btn btn-secondary btn-sm">← На сайт</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="index.html">Главная</a><span class="sep">/</span>
+    <span class="current">Сертификация</span>
+  </nav>
+</div>
+
+<main class="container legal-doc" style="max-width:820px;">
+  <span class="section-eyebrow">Документы</span>
+  <h1>Сертификация продукции</h1>
+  <p class="legal-updated">Действующие декларации соответствия и сертификаты качества. Список пополняется по мере оформления новых документов.</p>
+
+  <div id="cert-list"></div>
+</main>
+
+<footer class="site-footer" style="margin-top:64px;">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <span>© 2026 ООО «Мебельный Мастер». Все права защищены.</span>
+      <a href="index.html">На главную</a>
+    </div>
+  </div>
+</footer>
+
+<script src="data/certificates.js"></script>
+<script>
+function renderCertificates(){
+  const root = document.getElementById('cert-list');
+  if(!CERTIFICATES.length){
+    root.innerHTML = '<p style="color:var(--ink-soft)">Пока нет добавленных документов.</p>';
+    return;
+  }
+  root.innerHTML = CERTIFICATES.map(c => `
+    <div class="admin-section" style="background:var(--card-bg);">
+      <h2 style="margin-top:0;">${c.title}</h2>
+      <table class="spec-table">
+        <tr><td>Номер</td><td>${c.number}</td></tr>
+        <tr><td>Дата регистрации</td><td>${c.registrationDate}</td></tr>
+        <tr><td>Действует до</td><td>${c.validUntil}</td></tr>
+        <tr><td>Стандарт</td><td>${c.standard}</td></tr>
+        <tr><td>Заявитель</td><td>${c.applicant}</td></tr>
+        <tr><td>Изготовитель</td><td>${c.manufacturer}</td></tr>
+        <tr><td>Испытательная лаборатория</td><td>${c.testLab}</td></tr>
+        <tr><td>Протокол испытаний</td><td>${c.protocol}</td></tr>
+        <tr><td>Коды ТН ВЭД ЕАЭС</td><td>${c.tnved}</td></tr>
+        <tr><td>Продукция</td><td>${c.products}</td></tr>
+      </table>
+      ${c.fileUrl ? `<a href="${c.fileUrl}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="margin-top:16px;">Скачать скан документа</a>` : `<p style="font-size:.82rem;color:var(--ink-soft);margin-top:14px;">Скан документа появится здесь после загрузки.</p>`}
+    </div>
+  `).join('');
+}
+renderCertificates();
+</script>
+</body>
+</html>
